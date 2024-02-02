@@ -19,5 +19,45 @@
             <input type="submit" value="Create Ticket">
         </form>
     </div>
+
+    <div class="staff-page-container">
+        <h1>Staff Page</h1>
+        <ul class="user-list">
+            <!-- Staff members will be listed here dynamically -->
+        </ul>
+    </div>
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const userList = document.querySelector('.user-list');
+
+        // Example data (replace with actual data from your server)
+        const staffMembers = [
+            { id: 1, username: 'ABIZABI', isStaff: true },
+            { id: 2, username: 'Jane Smith', isStaff: false },
+        ];
+
+        staffMembers.forEach(user => {
+            const listItem = document.createElement('li');
+            listItem.className = 'user-item';
+            listItem.innerHTML = `
+                <span>${user.username}</span>
+                <button onclick="toggleStaffRole(${user.id}, ${user.isStaff})">
+                    ${user.isStaff ? 'Remove Staff' : 'Add Staff'}
+                </button>
+            `;
+            userList.appendChild(listItem);
+        });
+
+        window.toggleStaffRole = (userId, isStaff) => {
+            // Example: Send a request to your server to update staff role
+            console.log(`Toggling staff role for user ${userId}`);
+
+            // Update the UI (toggle isStaff value)
+            const userItem = document.querySelector(`.user-item:nth-child(${userId})`);
+            const button = userItem.querySelector('button');
+            button.textContent = isStaff ? 'Add Staff' : 'Remove Staff';
+        };
+    });
+</script>
 </html>
